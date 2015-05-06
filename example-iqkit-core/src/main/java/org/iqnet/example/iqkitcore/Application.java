@@ -1,7 +1,5 @@
 package org.iqnet.example.iqkitcore;
 
-import com.nextfaze.logging.Logging;
-
 import org.iqnect.iqkit.IQKit;
 
 import lombok.Getter;
@@ -24,14 +22,9 @@ public class Application extends android.app.Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        initLogging();
 
         mIQKit = IQKit.init(this, APP_ID, APP_SECRET);
         log.debug("instantiated iqkit: {}", mIQKit);
-    }
-
-    private void initLogging() {
-        Logging.configure(this, "log4j.properties");
     }
 
 }

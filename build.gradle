@@ -5,7 +5,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.2.0'
+        classpath 'com.android.tools.build:gradle:1.2.2'
         classpath 'com.jakewharton.sdkmanager:gradle-plugin:0.12.0'
 
         // NOTE: Do not place your application dependencies here; they belong
@@ -16,17 +16,10 @@ buildscript {
 allprojects {
     repositories {
         maven {
-            url 'http://maven.nextfaze.com/libs-release'
-            credentials {
-                username nextfazeArtifactoryUser
-                password nextfazeArtifactoryPassword
-            }
-        }
-        maven {
-            url 'http://repo.reficio.org/maven/'
-        }
-        maven {
             url "https://repo.commonsware.com.s3.amazonaws.com"
+        }
+        maven {
+            url "http://iqnect-org.github.io/iqkit-android"
         }
         flatDir {
             dirs "${rootDir}/libs"

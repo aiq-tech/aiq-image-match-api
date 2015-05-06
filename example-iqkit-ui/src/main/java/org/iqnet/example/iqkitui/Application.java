@@ -2,8 +2,6 @@ package org.iqnet.example.iqkitui;
 
 import android.support.multidex.MultiDexApplication;
 
-import com.nextfaze.logging.Logging;
-
 import org.iqnect.iqkit.IQKit;
 
 import lombok.Getter;
@@ -27,13 +25,8 @@ public class Application extends MultiDexApplication {
     public void onCreate() {
         super.onCreate();
 
-        initLogging();
         log.debug("application started");
 
         mIQKit = IQKit.init(this, APP_ID, APP_SECRET);
-    }
-
-    private void initLogging() {
-        Logging.configure(this, "log4j.properties");
     }
 }
