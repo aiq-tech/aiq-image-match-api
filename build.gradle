@@ -21,9 +21,6 @@ allprojects {
         maven {
             url "http://iqnect-org.github.io/iqkit-android"
         }
-        flatDir {
-            dirs "${rootDir}/libs"
-        }
         jcenter()
     }
 }

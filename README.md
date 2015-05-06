@@ -12,22 +12,26 @@ Installation
 add to your build.gradle:
 
 ```
-    dependencies {
-        compile 'org.iqnect.iqkit:iqkit-core:0.1.0@aar'
-        compile 'org.iqnect.iqkit:iqkit-ui:0.1.0@aar'
-    }
+dependencies {
+    compile 'org.iqnect:iqkit-core:0.1.0'
+    compile 'org.iqnect:iqkit-ui:0.1.0'
+}
 ```
 
 add to your top level (project) build.gradle:
 
 ```
-    allprojects {
-        repositories {
-            flatDir {
-                dirs "${rootDir}/libs"
-            }
+allprojects {
+    repositories {
+        maven {
+            url "https://repo.commonsware.com.s3.amazonaws.com"
         }
+        maven {
+            url "http://iqnect-org.github.io/iqkit-android"
+        }
+        jcenter()
     }
+}
 ```
 
 copy the iqkit aar files into a "libs" folder in your project.
