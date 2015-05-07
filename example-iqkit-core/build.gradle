@@ -11,8 +11,8 @@ android {
         versionName "1.0"
         applicationId "org.iqnet.example.iqkitcore"
 
-        buildConfigField('String', 'IQNECT_APP_ID', $/"${iqkitExampleAppId}"/$)
-        buildConfigField('String', 'IQNECT_APP_SECRET', $/"${iqkitExampleAppSecret}"/$)
+        buildConfigField('String', 'IQNECT_APP_ID', $/"${iqkitAppId}"/$)
+        buildConfigField('String', 'IQNECT_APP_SECRET', $/"${iqkitAppSecret}"/$)
     }
 
     buildTypes {

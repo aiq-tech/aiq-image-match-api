@@ -50,8 +50,8 @@ IQKit.init(context, "APP-ID", "APP-SECRET");
 To use the example apps, define the following in your global gradle.properties file:
 
 ```
-iqkitExampleAppId=enter app id here
-iqkitExampleAppSecret=enter app secret here
+iqkitAppId=enter app id here
+iqkitAppSecret=enter app secret here
 ```
 
 #### Optional
