@@ -36,9 +36,6 @@ allprojects {
 
 copy the iqkit aar files into a "libs" folder in your project.
 
-#### Manually
-
-
 Initialization
 ---------------
 
@@ -48,6 +45,13 @@ In your Application class, initialise the SDK with the App ID and secret you obt
 
 ```java
 IQKit.init(context, "APP-ID", "APP-SECRET");
+```
+
+To use the example apps, define the following in your global gradle.properties file:
+
+```
+iqkitExampleAppId=enter app id here
+iqkitExampleAppSecret=enter app secret here
 ```
 
 #### Optional

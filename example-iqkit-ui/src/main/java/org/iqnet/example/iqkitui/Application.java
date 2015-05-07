@@ -12,12 +12,6 @@ import lombok.extern.slf4j.Slf4j;
 @Accessors(prefix = "m")
 public class Application extends MultiDexApplication {
 
-    // TODO: insert your app id and secret here
-    //region VARIABLES
-    private static final String APP_ID = "APP-ID";
-    private static final String APP_SECRET = "APP-SECRET";
-    //endregion
-
     @Getter
     private IQKit mIQKit;
 
@@ -27,6 +21,6 @@ public class Application extends MultiDexApplication {
 
         log.debug("application started");
 
-        mIQKit = IQKit.init(this, APP_ID, APP_SECRET);
+        mIQKit = IQKit.init(this, BuildConfig.IQNECT_APP_ID, BuildConfig.IQNECT_APP_SECRET);
     }
 }

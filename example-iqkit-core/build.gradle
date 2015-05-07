@@ -10,6 +10,9 @@ android {
         versionCode 1
         versionName "1.0"
         applicationId "org.iqnet.example.iqkitcore"
+
+        buildConfigField('String', 'IQNECT_APP_ID', $/"${iqkitExampleAppId}"/$)
+        buildConfigField('String', 'IQNECT_APP_SECRET', $/"${iqkitExampleAppSecret}"/$)
     }
 
     buildTypes {
@@ -17,6 +20,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+
+    lintOptions {
+        abortOnError false
     }
 
     packagingOptions {

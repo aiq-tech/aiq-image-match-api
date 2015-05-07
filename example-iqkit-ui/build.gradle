@@ -13,6 +13,13 @@ android {
 
         // Enabling multidex support.
         multiDexEnabled true
+
+        buildConfigField('String', 'IQNECT_APP_ID', $/"${iqkitExampleAppId}"/$)
+        buildConfigField('String', 'IQNECT_APP_SECRET', $/"${iqkitExampleAppSecret}"/$)
+    }
+
+    lintOptions {
+        abortOnError false
     }
 
     buildTypes {
@@ -49,7 +56,6 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:22.1.1'
-
     compile 'org.iqnect:iqkit-ui:0.1.0'
 
     provided 'org.projectlombok:lombok:1.16.4'
