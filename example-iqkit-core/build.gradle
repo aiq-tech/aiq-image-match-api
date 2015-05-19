@@ -9,7 +9,7 @@ android {
         targetSdkVersion global_targetSdkVersion
         versionCode 1
         versionName "1.0"
-        applicationId "org.iqnet.example.iqkitcore"
+        applicationId "org.iqnect.example.iqkitcore"
 
         buildConfigField('String', 'IQNECT_APP_ID', $/"${iqkitAppId}"/$)
         buildConfigField('String', 'IQNECT_APP_SECRET', $/"${iqkitAppSecret}"/$)

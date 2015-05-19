@@ -9,7 +9,7 @@ android {
         targetSdkVersion global_targetSdkVersion
         versionCode 1
         versionName "1.0"
-        applicationId "org.iqnet.example.iqkitui"
+        applicationId "org.iqnect.example.iqkitui"
 
         // Enabling multidex support.
         multiDexEnabled true

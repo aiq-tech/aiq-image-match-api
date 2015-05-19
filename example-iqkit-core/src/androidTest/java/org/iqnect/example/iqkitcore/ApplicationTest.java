@@ -1,4 +1,4 @@
-package org.iqnet.example.iqkitui;
+package org.iqnect.example.iqkitcore;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

@@ -1,4 +1,4 @@
-package org.iqnet.example.iqkitui;
+package org.iqnect.example.iqkitui;
 
 import android.content.Intent;
 import android.os.Bundle;

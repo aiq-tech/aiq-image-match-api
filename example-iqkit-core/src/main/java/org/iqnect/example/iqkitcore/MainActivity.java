@@ -1,4 +1,4 @@
-package org.iqnet.example.iqkitcore;
+package org.iqnect.example.iqkitcore;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

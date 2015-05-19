@@ -1,4 +1,6 @@
-package org.iqnet.example.iqkitcore;
+package org.iqnect.example.iqkitui;
+
+import android.support.multidex.MultiDexApplication;
 
 import org.iqnect.iqkit.IQKit;
 
@@ -6,9 +8,9 @@ import lombok.Getter;
 import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 
-@Accessors(prefix = "m")
 @Slf4j
-public class Application extends android.app.Application {
+@Accessors(prefix = "m")
+public class Application extends MultiDexApplication {
 
     @Getter
     private IQKit mIQKit;
@@ -17,8 +19,8 @@ public class Application extends android.app.Application {
     public void onCreate() {
         super.onCreate();
 
-        mIQKit = IQKit.init(this, BuildConfig.IQNECT_APP_ID, BuildConfig.IQNECT_APP_SECRET);
-        log.debug("instantiated iqkit: {}", mIQKit);
-    }
+        log.debug("application started");
 
+        mIQKit = IQKit.init(this, BuildConfig.IQNECT_APP_ID, BuildConfig.IQNECT_APP_SECRET);
+    }
 }
