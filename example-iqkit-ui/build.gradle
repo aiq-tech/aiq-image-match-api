@@ -62,7 +62,7 @@ dependencies {
 
     compile 'com.android.support:appcompat-v7:22.1.1'
 
-    compile 'org.iqnect:iqkit-ui:0.1.1'
+    compile 'org.iqnect:iqkit-ui:0.1.2'
 
     provided 'org.projectlombok:lombok:1.16.4'
 }
