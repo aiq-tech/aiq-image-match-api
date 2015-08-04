@@ -26,9 +26,6 @@ allprojects {
         maven {
             url "https://repo.commonsware.com.s3.amazonaws.com"
         }
-        maven {
-            url "http://iqnect-org.github.io/iqkit-android"
-        }
         jcenter()
     }
 }

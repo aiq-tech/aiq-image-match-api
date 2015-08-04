@@ -19,7 +19,7 @@ allprojects {
         maven {
             url "https://repo.commonsware.com.s3.amazonaws.com"
         }
-        if(hasProperty("iqkitDevelopmentRepository")) {
+        if((iqkitDevelopmentRepository)) {
             maven {
                 url uri("${iqkitDevelopmentRepository}")
             }

@@ -48,10 +48,6 @@ public class MainActivity extends AppCompatActivity {
             public void onError(Throwable throwable) {
                 log.debug("error: {}", throwable);
             }
-
-            @Override
-            public void onScanResults(List<ScanResult> list) {
-            }
         });
     }
 
