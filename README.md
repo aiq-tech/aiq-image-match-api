@@ -13,8 +13,8 @@ add to your build.gradle:
 
 ```
 dependencies {
-    compile 'org.iqnect:iqkit-core:0.1.0'
-    compile 'org.iqnect:iqkit-ui:0.1.0'
+    compile 'org.iqnect:iqkit-core:0.9.0'
+    compile 'org.iqnect:iqkit-ui:0.9.0'
 }
 ```
 
