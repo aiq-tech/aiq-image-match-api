@@ -8,12 +8,9 @@ import android.view.View;
 import android.widget.Toast;
 
 import org.iqnect.iqkit.model.SearchResult;
-import org.iqnect.iqkit.ui.camera.ScanResult;
 import org.iqnect.iqkit.ui.camera.ScannerActivity;
 import org.iqnect.iqkit.ui.camera.ScannerResultHandler;
 import org.iqnect.iqkit.ui.web.WebActivity;
-
-import java.util.List;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -48,10 +45,6 @@ public class MainActivity extends AppCompatActivity {
             public void onError(Throwable throwable) {
                 log.debug("error: {}", throwable);
             }
-
-            @Override
-            public void onScanResults(List<ScanResult> list) {
-            }
         });
     }
 
@@ -59,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         int viewId = view.getId();
 
         if(viewId == R.id.button_start_iqkit) {
-            org.iqnect.iqkit.ui.MainActivity.start(this);
+            org.iqnect.iqkit.ui.app.MainActivity.start(this);
         } else if(viewId == R.id.button_start_scanner) {
             ScannerActivity.start(this);
         }
