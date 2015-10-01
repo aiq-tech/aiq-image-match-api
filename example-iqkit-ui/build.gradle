@@ -16,6 +16,7 @@ android {
 
         buildConfigField('String', 'IQNECT_APP_ID', $/"${iqkitAppId}"/$)
         buildConfigField('String', 'IQNECT_APP_SECRET', $/"${iqkitAppSecret}"/$)
+        buildConfigField('String', 'IQNECT_APP_SERVER', hasProperty("iqkitAppServer") ? $/"${iqkitAppServer}"/$ : '""')
     }
 
     lintOptions {
