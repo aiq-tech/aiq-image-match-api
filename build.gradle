@@ -15,9 +15,6 @@ buildscript {
 
 allprojects {
     repositories {
-        maven {
-            url "https://repo.commonsware.com.s3.amazonaws.com"
-        }
         if (hasProperty("iqkitDevelopmentRepository")) {
             maven {
                 url uri("${iqkitDevelopmentRepository}")
@@ -29,8 +26,10 @@ allprojects {
 }
 
 subprojects {
-    ext.global_compileSdkVersion = 22
-    ext.global_buildToolsVersion = "22.0.1"
-    ext.global_minSdkVersion = 15
-    ext.global_targetSdkVersion = 22
+    ext.global_compileSdkVersion = 23
+    ext.global_buildToolsVersion = "23.0.1"
+    ext.global_appCompatVersion = "23.0.1"
+    ext.global_iqKitVersion = "0.9.1"
+    ext.global_minSdkVersion = 16
+    ext.global_targetSdkVersion = 23
 }
