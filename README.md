@@ -60,13 +60,13 @@ The age and gender can be updated at anytime with these methods.
 Usage
 -----
 
-To initiate a vision search, add the following code to an appropriate activity:
+To initiate a continuous vision search, add the following code to an appropriate activity:
 
 ```java
     ScannerActivity.start(this);
 ```
 
-When the search is complete, you will get a callback via the `onActivityResult` method:
+If a successful match is found, you will get a callback via the `onActivityResult` method. The result may be `null` if the user has manually chosen an image to be searched for and no response is found:
 
 ```java
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
