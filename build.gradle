@@ -37,7 +37,7 @@ subprojects {
     ext.global_compileSdkVersion = 23
     ext.global_buildToolsVersion = "23.0.1"
     ext.global_appCompatVersion = "23.0.1"
-    ext.global_iqKitVersion = "0.9.1"
+    ext.global_iqKitVersion = "0.9.2"
     ext.global_minSdkVersion = 16
     ext.global_targetSdkVersion = 23
 }
