@@ -42,7 +42,11 @@ dependencies {
 
     compile "com.android.support:appcompat-v7:${global_appCompatVersion}"
 
-    compile "org.iqnect:iqkit-core:${global_iqKitVersion}"
+    if (project.hasProperty('iqkitTesting')) {
+        compile group: "org.iqnect", name: "iqkit-core", version: "${global_iqKitVersion}", changing: true
+    } else {
+        compile "org.iqnect:iqkit-core:${global_iqKitVersion}"
+    }
 
     provided 'org.projectlombok:lombok:1.16.4'
 }
