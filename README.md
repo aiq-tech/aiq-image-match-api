@@ -13,25 +13,20 @@ add to your build.gradle:
 
 ```
 dependencies {
-    compile 'org.iqnect:iqkit-core:0.9.0'
-    compile 'org.iqnect:iqkit-ui:0.9.0'
+    compile 'org.iqnect:iqkit-core:0.9.1'
+    compile 'org.iqnect:iqkit-ui:0.9.1'
 }
 ```
 
-add to your top level (project) build.gradle:
+make sure you have the jcenter repo in your top level (project) build.gradle:
 
 ```
 allprojects {
     repositories {
-        maven {
-            url "https://repo.commonsware.com.s3.amazonaws.com"
-        }
         jcenter()
     }
 }
 ```
-
-copy the iqkit aar files into a "libs" folder in your project.
 
 Initialization
 ---------------
@@ -57,7 +52,7 @@ For best results, report some further information about the user:
 
 ```java
 IQKit.getInstance().setUserAge(42);
-IQKit.getInstance().setUserGender("f");
+IQKit.getInstance().setUserGender(Gender.FEMALE);
 ```
 
 The age and gender can be updated at anytime with these methods.
@@ -65,13 +60,13 @@ The age and gender can be updated at anytime with these methods.
 Usage
 -----
 
-To initiate a vision search, add the following code to an appropriate activity:
+To initiate a continuous vision search, add the following code to an appropriate activity:
 
 ```java
     ScannerActivity.start(this);
 ```
 
-When the search is complete, you will get a callback via the `onActivityResult` method:
+If a successful match is found, you will get a callback via the `onActivityResult` method. The result may be `null` if the user has manually chosen an image to be searched for and no response is found:
 
 ```java
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
