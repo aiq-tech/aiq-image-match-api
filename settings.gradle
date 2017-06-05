@@ -1,2 +1,2 @@
 rootProject.name = 'iqkit-android'
-include ':example-iqkit-core', ':example-iqkit-ui'
+include ':iqkit-sample'
