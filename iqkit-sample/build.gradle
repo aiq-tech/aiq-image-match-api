@@ -9,22 +9,28 @@ android {
         targetSdkVersion global_targetSdkVersion
         versionCode 3
         versionName "1.0.2"
-        applicationId "org.iqnect.example.iqkitcore"
+        applicationId "org.iqnect.example.iqkitui"
+
+        // Enabling multidex support.
+        multiDexEnabled true
 
         buildConfigField('String', 'IQNECT_APP_ID', $/"${iqkitAppId}"/$)
         buildConfigField('String', 'IQNECT_APP_SECRET', $/"${iqkitAppSecret}"/$)
         buildConfigField('String', 'IQNECT_APP_SERVER', hasProperty("iqkitAppServer") ? $/"${iqkitAppServer}"/$ : '""')
     }
 
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
+    dexOptions {
+        jumboMode true
     }
-
     lintOptions {
         abortOnError false
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
     }
 
     packagingOptions {
@@ -41,12 +47,11 @@ dependencies {
     compile fileTree(dir: '../libs', include: ['*.jar'])
 
     compile "com.android.support:appcompat-v7:${global_appCompatVersion}"
+    compile 'com.android.support:multidex:1.0.1'
 
     if (project.hasProperty('iqkitTesting')) {
-        compile group: "org.iqnect", name: "iqkit-core", version: "${global_iqKitVersion}", changing: true
+        compile group: "org.iqnect", name: "iqkit-ui", version: "${global_iqKitVersion}", changing: true
     } else {
-        compile "org.iqnect:iqkit-core:${global_iqKitVersion}"
+        compile "org.iqnect:iqkit-ui:${global_iqKitVersion}"
     }
-
-    provided 'org.projectlombok:lombok:1.16.4'
 }
