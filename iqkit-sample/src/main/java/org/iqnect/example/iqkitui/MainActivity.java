@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -14,10 +15,10 @@ import android.widget.Toast;
 import org.iqnect.iqkit.api.NotFoundResponseException;
 import org.iqnect.iqkit.model.SearchResult;
 import org.iqnect.iqkit.search.SearchService;
-import org.iqnect.iqkit.ui.app.SearchResultActivity;
-import org.iqnect.iqkit.ui.camera.IqKitScannerActivity;
 import org.iqnect.iqkit.util.ServiceUtils;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 import retrofit.mime.TypedFile;
@@ -34,7 +35,7 @@ import static org.iqnect.iqkit.util.BitmapUtils.getSizeRestrictedBitmap;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
-
+    private static final int REQUEST_CAPTURE_IMAGE = 101;
     private static final int REQUEST_CODE_CHOOSE_IMAGE = 100;
     private static final int LONGEST_SIDE_DESIRED_PIXELS = 800;
 
@@ -64,6 +65,21 @@ public class MainActivity extends AppCompatActivity {
                     searchBitmap(uri);
                 }
                 break;
+            case REQUEST_CAPTURE_IMAGE:
+                if(resultCode == RESULT_OK) {
+                    Bundle extras = data.getExtras();
+                    Bitmap imageBitmap = (Bitmap) extras.get("data");
+
+                    try {
+                        File tmp_img = File.createTempFile("upload", ".jpg", this.getCacheDir());
+                        imageBitmap.compress(Bitmap.CompressFormat.JPEG, 80, new FileOutputStream(tmp_img));
+                        searchBitmap(Uri.fromFile(tmp_img));
+                    }
+                    catch (Exception e)
+                    {
+                        showToast("Failed to capture image:" + e.toString());
+                    }
+                }
         }
 
         Log.d(TAG, "activity result: " + data);
@@ -79,7 +95,10 @@ public class MainActivity extends AppCompatActivity {
         int viewId = view.getId();
 
         if (viewId == R.id.button_open_scanner) {
-            IqKitScannerActivity.start(this);
+            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//            intent.putExtra("return-data", true);
+            startActivityForResult(intent, REQUEST_CAPTURE_IMAGE);
+//            IqKitScannerActivity.start(this);
         } else if(viewId == R.id.button_select_image) {
             Intent intent = new Intent();
             intent.setType("image/*");
@@ -123,8 +142,11 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void call(@Nullable SearchResult searchResult) {
                         if (searchResult != null) {
-                            Intent searchResultIntent = SearchResultActivity.getSearchResultIntent(MainActivity.this, searchResult);
-                            startActivity(searchResultIntent);
+                            Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http:" + searchResult.getMatchedUrl()));
+                            startActivity(myIntent);
+
+//                            Intent searchResultIntent = SearchResultActivity.getSearchResultIntent(MainActivity.this, searchResult);
+//                            startActivity(searchResultIntent);
                         } else {
                             showToast("No match found");
                         }

@@ -14,9 +14,9 @@ android {
         // Enabling multidex support.
         multiDexEnabled true
 
-        buildConfigField('String', 'IQNECT_APP_ID', $/"${iqkitAppId}"/$)
-        buildConfigField('String', 'IQNECT_APP_SECRET', $/"${iqkitAppSecret}"/$)
-        buildConfigField('String', 'IQNECT_APP_SERVER', hasProperty("iqkitAppServer") ? $/"${iqkitAppServer}"/$ : '""')
+        buildConfigField('String', 'IQNECT_APP_ID', "\"80b5a8ebe456adab64895ea2f4cf98235376d101052c623d29\"")
+        buildConfigField('String', 'IQNECT_APP_SECRET', "\"1119257d8156e5cabd6a72df2f8f95716d754cd1934c66e8fa91641814004e36\"")
+        buildConfigField('String', 'IQNECT_APP_SERVER', hasProperty("iqkitAppServer") ? $/"${iqkitAppServer}"/$ : '"https://capi.iqnect.org"')
     }
 
     dexOptions {
