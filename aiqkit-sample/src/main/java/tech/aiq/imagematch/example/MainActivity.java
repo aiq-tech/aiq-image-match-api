@@ -1,4 +1,4 @@
-package org.iqnect.example.iqkitui;
+package tech.aiq.imagematch.example;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -12,33 +12,22 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import org.iqnect.iqkit.api.NotFoundResponseException;
-import org.iqnect.iqkit.model.SearchResult;
-import org.iqnect.iqkit.search.SearchService;
-import org.iqnect.iqkit.util.ServiceUtils;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
-import retrofit.mime.TypedFile;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
+import tech.aiq.imagematch.api.ImageMatchService;
+import tech.aiq.imagematch.ui.ImageMatchUI;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
-import static org.iqnect.iqkit.util.BitmapUtils.getSizeRestrictedBitmap;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final int REQUEST_CAPTURE_IMAGE = 101;
     private static final int REQUEST_CODE_CHOOSE_IMAGE = 100;
-    private static final int LONGEST_SIDE_DESIRED_PIXELS = 800;
-
     @NonNull
     private View mProgressBarContainer;
 
@@ -66,28 +55,18 @@ public class MainActivity extends AppCompatActivity {
                 }
                 break;
             case REQUEST_CAPTURE_IMAGE:
+
                 if(resultCode == RESULT_OK) {
-                    Bundle extras = data.getExtras();
-                    Bitmap imageBitmap = (Bitmap) extras.get("data");
 
-                    try {
-                        File tmp_img = File.createTempFile("upload", ".jpg", this.getCacheDir());
-                        imageBitmap.compress(Bitmap.CompressFormat.JPEG, 80, new FileOutputStream(tmp_img));
-                        searchBitmap(Uri.fromFile(tmp_img));
-                    }
-                    catch (Exception e)
-                    {
-                        showToast("Failed to capture image:" + e.toString());
-                    }
+                    Bitmap imageBitmap = (Bitmap) data.getExtras().get("data");
+                    //scale up the bitmap large enough for testing
+                    imageBitmap = Bitmap.createScaledBitmap(imageBitmap, imageBitmap.getWidth() * 3, imageBitmap.getHeight()* 3, true);
+                    searchBitmap(imageBitmap);
                 }
+                break;
+            default:
+                break;
         }
-
-        Log.d(TAG, "activity result: " + data);
-    }
-
-    @NonNull
-    private SearchService getSearchService() {
-        return ((Application) getApplication()).getIQKit().getSearchService();
     }
 
     @SuppressWarnings("unused")
@@ -95,11 +74,13 @@ public class MainActivity extends AppCompatActivity {
         int viewId = view.getId();
 
         if (viewId == R.id.button_open_scanner) {
+            ImageMatchUI.start(this);
+        }
+        else if(viewId == R.id.button_take_image) {
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//            intent.putExtra("return-data", true);
             startActivityForResult(intent, REQUEST_CAPTURE_IMAGE);
-//            IqKitScannerActivity.start(this);
-        } else if(viewId == R.id.button_select_image) {
+        }
+        else if(viewId == R.id.button_select_image) {
             Intent intent = new Intent();
             intent.setType("image/*");
             intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -108,22 +89,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void searchBitmap(@NonNull Uri uri) {
-        Bitmap result = null;
-        try {
-            result = getSizeRestrictedBitmap(this, uri, LONGEST_SIDE_DESIRED_PIXELS, false, false);
-            TypedFile typedFile = ServiceUtils.typedFile(this, result);
-            performSearch(getSearchService().searchByImage(typedFile));
-        } catch (IOException e) {
-            Log.e(TAG, "Error searching for image", e);
-            showToast("Error: " + e.getMessage());
-        } finally {
-            if (result != null) {
-                result.recycle();
-            }
-        }
+        performSearch(ImageMatchService.matchImage(uri));
     }
+    private void searchBitmap(@NonNull Bitmap bitmap) {
 
-    private void performSearch(@NonNull Observable<SearchResult> observable) {
+        performSearch(ImageMatchService.matchImage(bitmap));
+    }
+    private void performSearch( Observable<String> observable) {
+        if(observable == null)
+            return;
         observable.observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(new Action0() {
@@ -138,15 +112,12 @@ public class MainActivity extends AppCompatActivity {
                         mProgressBarContainer.setVisibility(GONE);
                     }
                 })
-                .subscribe(new Action1<SearchResult>() {
+                .subscribe(new Action1<String>() {
                     @Override
-                    public void call(@Nullable SearchResult searchResult) {
+                    public void call(@Nullable String searchResult) {
                         if (searchResult != null) {
-                            Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http:" + searchResult.getMatchedUrl()));
+                            Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(searchResult));
                             startActivity(myIntent);
-
-//                            Intent searchResultIntent = SearchResultActivity.getSearchResultIntent(MainActivity.this, searchResult);
-//                            startActivity(searchResultIntent);
                         } else {
                             showToast("No match found");
                         }
@@ -154,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
                 }, new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {
-                        if (throwable instanceof NotFoundResponseException) {
+                        if(ImageMatchService.isImageNotFoundError(throwable)) {
                             showToast("No match found");
                         } else {
                             showToast("Error: " + throwable.getMessage());

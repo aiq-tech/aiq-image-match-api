@@ -3,18 +3,19 @@
 buildscript {
     repositories {
         jcenter()
+        mavenLocal()
     }
 
     configurations.all {
         // check for updates every build
-        if (project.hasProperty('iqkitTesting')) {
+        if (project.hasProperty('aiqkitTesting')) {
             resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
         }
     }
 
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.3'
-        classpath 'com.jakewharton.sdkmanager:gradle-plugin:0.12.0'
+//        classpath 'com.jakewharton.sdkmanager:gradle-plugin:0.12.0'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -23,11 +24,6 @@ buildscript {
 
 allprojects {
     repositories {
-        if (hasProperty("iqkitDevelopmentRepository")) {
-            maven {
-                url uri("${iqkitDevelopmentRepository}")
-            }
-        }
         jcenter()
         mavenLocal()
     }
@@ -37,7 +33,7 @@ subprojects {
     ext.global_compileSdkVersion = 25
     ext.global_buildToolsVersion = "25.0.3"
     ext.global_appCompatVersion = "25.3.1"
-    ext.global_iqKitVersion = "0.9.3"
+    ext.global_aiqKitVersion = "0.9.3"
     ext.global_minSdkVersion = 19
     ext.global_targetSdkVersion = 22
 }

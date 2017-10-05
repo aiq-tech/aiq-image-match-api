@@ -9,14 +9,14 @@ android {
         targetSdkVersion global_targetSdkVersion
         versionCode 3
         versionName "1.0.2"
-        applicationId "org.iqnect.example.iqkitui"
+        applicationId "tech.aiq.imagematch.example"
 
         // Enabling multidex support.
         multiDexEnabled true
 
-        buildConfigField('String', 'IQNECT_APP_ID', "\"80b5a8ebe456adab64895ea2f4cf98235376d101052c623d29\"")
-        buildConfigField('String', 'IQNECT_APP_SECRET', "\"1119257d8156e5cabd6a72df2f8f95716d754cd1934c66e8fa91641814004e36\"")
-        buildConfigField('String', 'IQNECT_APP_SERVER', hasProperty("iqkitAppServer") ? $/"${iqkitAppServer}"/$ : '"https://capi.iqnect.org"')
+        buildConfigField('String', 'AIQ_APP_ID', "\"${AIQ_APP_ID}\"")
+        buildConfigField('String', 'AIQ_APP_SECRET', "\"${AIQ_APP_SECRET}\"")
+        buildConfigField('String', 'AIQ_APP_SERVER', "\"${AIQ_APP_SERVER}\"")
     }
 
     dexOptions {
@@ -48,10 +48,5 @@ dependencies {
 
     compile "com.android.support:appcompat-v7:${global_appCompatVersion}"
     compile 'com.android.support:multidex:1.0.1'
-
-    if (project.hasProperty('iqkitTesting')) {
-        compile group: "org.iqnect", name: "iqkit-ui", version: "${global_iqKitVersion}", changing: true
-    } else {
-        compile "org.iqnect:iqkit-ui:${global_iqKitVersion}"
-    }
+    compile "tech.aiq:aiq-image-match-ui:${global_aiqKitVersion}"
 }
