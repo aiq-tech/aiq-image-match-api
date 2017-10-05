@@ -24,6 +24,7 @@ public class Application extends MultiDexApplication {
             serverUrl = ImageMatchService.getServiceEndPoint(ImageMatchService.ServiceType.PRODUCTION);
             Log.d(TAG, "using default server");
         }
+        // initialize the image match service
         ImageMatchService.init(this, BuildConfig.AIQ_APP_ID, BuildConfig.AIQ_APP_SECRET, serverUrl);
         Log.d(TAG, "instantiated image match sdk ");
     }

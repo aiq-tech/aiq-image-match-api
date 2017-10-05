@@ -74,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
         int viewId = view.getId();
 
         if (viewId == R.id.button_open_scanner) {
+            // start the image match ui
             ImageMatchUI.start(this);
         }
         else if(viewId == R.id.button_take_image) {
@@ -89,15 +90,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void searchBitmap(@NonNull Uri uri) {
+        // match image by image file
         performSearch(ImageMatchService.matchImage(uri));
     }
     private void searchBitmap(@NonNull Bitmap bitmap) {
-
+        // match image by a image in memory
         performSearch(ImageMatchService.matchImage(bitmap));
     }
     private void performSearch( Observable<String> observable) {
         if(observable == null)
             return;
+        // handle the search result
         observable.observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(new Action0() {
@@ -115,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
                 .subscribe(new Action1<String>() {
                     @Override
                     public void call(@Nullable String searchResult) {
+                        // take the returned payload as url and show it in browser window
                         if (searchResult != null) {
                             Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(searchResult));
                             startActivity(myIntent);
@@ -125,6 +129,7 @@ public class MainActivity extends AppCompatActivity {
                 }, new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {
+                        // check if the result is "no match found'
                         if(ImageMatchService.isImageNotFoundError(throwable)) {
                             showToast("No match found");
                         } else {
